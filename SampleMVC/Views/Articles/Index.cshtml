@@ -24,7 +24,27 @@
                     </div>
                 </form>
                 <br /><br />
-                <a asp-action="Create" class="btn btn-outline-primary btn-sm">Create New</a>
+                @{
+
+                    @foreach (var role in ViewBag.role)
+                    {
+                        if (role.RoleName == "contributor")
+                        {
+                            <a asp-action="Create" class="btn btn-outline-primary btn-sm">Create New</a>
+                        }
+                        else if (role.RoleName == "reader")
+                        {
+                            <div>
+                                <!-- HTML for Contributor -->
+                                <h2>Welcome reader!</h2>
+                                <!-- Add additional HTML specific to Contributor role -->
+                            </div>
+                        }
+
+                    }
+
+                }
+                
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -46,8 +66,25 @@
                                 <td>@article.Title</td>
                                 <td>@article.IsApproved</td>
                                 <td><img src="~/pics/@article.Pic" width="60" /></td>
-                                <td><a asp-action="Edit" asp-route-id="@article.CategoryID" class="btn btn-warning btn-sm">edit</a></td>
-                                <td><a asp-action="Delete" asp-route-id="@article.CategoryID" class="btn btn-danger btn-sm">delete</a></td>
+                                @{
+
+                                    @foreach (var role in ViewBag.role)
+                                    {
+                                        if (role.RoleName == "contributor")
+                                        {
+                                            <td><a asp-action="Edit" asp-route-id="@article.CategoryID" class="btn btn-warning btn-sm">edit</a></td>
+                                            <td><a asp-action="Delete" asp-route-id="@article.CategoryID" class="btn btn-danger btn-sm">delete</a></td>
+                                        }
+                                        else if (role.RoleName == "reader")
+                                        {
+                                            <td></td>
+                                            <td></td>
+                                        }
+
+                                    }
+
+                                }
+                               
                             </tr>
                         }
                     </tbody>
@@ -62,3 +99,4 @@
     </div>
 
 </div>
+

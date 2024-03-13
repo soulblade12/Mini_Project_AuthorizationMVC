@@ -4,6 +4,7 @@ using MyWebFormApp.BLL;
 using MyWebFormApp.BLL.DTOs;
 using MyWebFormApp.BLL.Interfaces;
 using SampleMVC.ViewModels;
+using System.Text.Json;
 
 namespace SampleMVC.Controllers
 {
@@ -20,6 +21,9 @@ namespace SampleMVC.Controllers
 
         public IActionResult Index(int CategoryID)
         {
+            var userDto = JsonSerializer.Deserialize<UserDTO>(HttpContext.Session.GetString("user"));
+            ViewBag.role = userDto.Roles;
+
             if (TempData["Message"] != null)
             {
                 ViewBag.Message = TempData["Message"]?.ToString();

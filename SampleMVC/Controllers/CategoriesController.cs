@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyWebFormApp.BLL.DTOs;
 using MyWebFormApp.BLL.Interfaces;
+using System.Text.Json;
 
 namespace SampleMVC.Controllers;
 
@@ -15,6 +16,10 @@ public class CategoriesController : Controller
 
     public IActionResult Index(int pageNumber = 1, int pageSize = 5, string search = "", string act = "")
     {
+
+        var userDto = JsonSerializer.Deserialize<UserDTO>(HttpContext.Session.GetString("user"));
+        ViewBag.role = userDto.Roles;
+
         if (TempData["message"] != null)
         {
             ViewData["message"] = TempData["message"];
@@ -155,5 +160,7 @@ public class CategoriesController : Controller
 
         return View();
     }
+
+
 
 }
