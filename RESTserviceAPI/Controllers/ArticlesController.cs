@@ -37,6 +37,8 @@ namespace RESTserviceAPI.Controllers
             _articleBLL.Insert(articleCreate);
             var result = _articleBLL.GetArticleByCategory(articleCreate.CategoryID);
             return Ok($"Data Category {articleCreate.CategoryID} berhasil diupdate !");
+            return CreatedAtAction(nameof(GetByName),
+        new { id = articleCreate.CategoryID }, articleCreate);
         }
 
         // PUT api/<ValuesController>/5
